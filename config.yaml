@@ -1,8 +1,8 @@
 settings:
   title: 'Status Page'
-  url: 'https://cf-workers-status-page-production.cleanshelf.workers.dev' # used for Slack messages
+  url: 'https://status.cleanshelf.com' # used for Slack messages
   logo: logo-192x192.png # image in ./public/ folder
-  daysInHistogram: 90 # number of days you want to display in histogram
+  daysInHistogram: 30 # number of days you want to display in histogram
   collectResponseTimes: false # experimental feature, enable only for <5 monitors or on paid plans
 
   allmonitorsOperational: 'All Systems Operational'
@@ -16,16 +16,9 @@ settings:
 
 monitors:
   - id: app-cleanshelf-com
-    name: 'Cleanshelf frontend'
-    description: 'Cleanshelf frontend'
+    name: 'Cleanshelf App'
+    description: 'Cleanshelf App'
     url: 'https://app.cleanshelf.com/'
-    method: GET
-    expectStatus: 200
-    followRedirect: false
-  - id: app-backend-cleanshelf-com
-    name: 'Cleanshelf backend'
-    description: 'Cleanshelf backend'
-    url: 'https://app.cleanshelf.com/_ah/health'
     method: GET
     expectStatus: 200
     followRedirect: false
