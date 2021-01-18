@@ -16,9 +16,23 @@ settings:
 
 monitors:
   - id: app-cleanshelf-com
-    name: app.cleanshelf.com
-    description: 'Cleanshelf app'
+    name: 'Cleanshelf frontend'
+    description: 'Cleanshelf frontend'
     url: 'https://app.cleanshelf.com/'
+    method: GET
+    expectStatus: 200
+    followRedirect: false
+  - id: app-backend-cleanshelf-com
+    name: 'Cleanshelf backend'
+    description: 'Cleanshelf backend'
+    url: 'https://app.cleanshelf.com/_ah/health'
+    method: GET
+    expectStatus: 200
+    followRedirect: false
+  - id: api-cleanshelf-com
+    name: 'Cleanshelf API'
+    description: 'Cleanshelf API'
+    url: 'https://api.cleanshelf.com/_ah/health'
     method: GET
     expectStatus: 200
     followRedirect: false
