@@ -2,7 +2,7 @@ settings:
   title: 'Status Page'
   url: 'https://status.cleanshelf.com' # used for Slack messages
   logo: logo-192x192.png # image in ./public/ folder
-  daysInHistogram: 30 # number of days you want to display in histogram
+  daysInHistogram: 90 # number of days you want to display in histogram
   collectResponseTimes: false # experimental feature, enable only for <5 monitors or on paid plans
 
   allmonitorsOperational: 'All Systems Operational'
