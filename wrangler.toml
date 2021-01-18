@@ -3,6 +3,7 @@ workers_dev = true
 account_id = ""
 type = "webpack"
 webpack_config = "node_modules/flareact/webpack"
+route = "status.cleanshelf.com"
 
 [triggers]
 crons = ["*/2 * * * *"]
