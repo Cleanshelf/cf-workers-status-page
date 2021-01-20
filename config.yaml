@@ -29,3 +29,10 @@ monitors:
     method: GET
     expectStatus: 200
     followRedirect: false
+  - id: services-cleanshelf-com
+    name: 'Cleanshelf Services'
+    description: 'Cleanshelf Services'
+    url: 'https://app.cleanshelf.com/services'
+    method: GET
+    expectStatus: 200
+    followRedirect: false
