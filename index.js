@@ -10,10 +10,8 @@ import { processCronTrigger } from './src/functions/cronTrigger'
  */
 const DEBUG = false
 
-addEventListener('fetch', (event) => {
+addEventListener('fetch',  (event) => {
   try {
-    event.respondWith(handleRequest(event.request))
-    // let response = await fetch(event.request);
     // let response = await handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
     // let newResponse = new Response(response.body, response)
     //
@@ -21,6 +19,7 @@ addEventListener('fetch', (event) => {
     // newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
     //
     // event.respondWith(newResponse)
+    event.respondWith(handleRequest(event))
   } catch (e) {
     if (DEBUG) {
       return event.respondWith(
@@ -37,9 +36,10 @@ addEventListener('scheduled', (event) => {
   event.waitUntil(processCronTrigger(event))
 })
 
-async function handleRequest(request) {
-  console.log('Got request', request);
-  const response = await fetch(request);
-  console.log('Got response', response);
-  return response;
+async function handleRequest(event) {
+  let response = await handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
+
+  response = new Response(response.body, response)
+  response.headers.set("x-my-header", "custom value")
+  return response
 }
