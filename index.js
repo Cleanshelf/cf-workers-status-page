@@ -12,13 +12,6 @@ const DEBUG = false
 
 addEventListener('fetch',  (event) => {
   try {
-    // let response = await handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
-    // let newResponse = new Response(response.body, response)
-    //
-    // newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
-    // newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
-    //
-    // event.respondWith(newResponse)
     event.respondWith(handleRequest(event))
   } catch (e) {
     if (DEBUG) {
@@ -36,10 +29,14 @@ addEventListener('scheduled', (event) => {
   event.waitUntil(processCronTrigger(event))
 })
 
+// add custom headers
 async function handleRequest(event) {
   let response = await handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
 
   response = new Response(response.body, response)
-  response.headers.set("x-my-header", "custom value")
+
+  response.headers.set("X-Frame-Options", "SAMEORIGIN");
+  response.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
+
   return response
 }
