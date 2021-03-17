@@ -12,9 +12,10 @@ const DEBUG = false
 
 addEventListener('fetch', (event) => {
   try {
-    event.respondWith(
-      handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG),
-    )
+    let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
+    response.headers.set("X-Frame-Options", "SAMEORIGIN");
+    response.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
+    event.respondWith(response);
   } catch (e) {
     if (DEBUG) {
       return event.respondWith(
