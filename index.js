@@ -15,8 +15,8 @@ addEventListener('fetch', (event) => {
     let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
     let newResponse = new Response(response.body, response)
 
-    newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
-    newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
+    // newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
+    // newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
 
     event.respondWith(newResponse);
   } catch (e) {
