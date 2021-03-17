@@ -13,9 +13,18 @@ const DEBUG = false
 addEventListener('fetch', (event) => {
   try {
     let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
-    // response.headers.set("X-Frame-Options", "SAMEORIGIN");
-    // response.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
-    event.respondWith(response);
+    let newHeaders = new Headers(response.headers)
+
+    newHeaders.set("X-Frame-Options", "SAMEORIGIN");
+    newHeaders.set("Content-Security-Policy", "frame-ancestors 'none'");
+
+    let newResponse = new Response(response.body , {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders
+    })
+
+    event.respondWith(newResponse);
   } catch (e) {
     if (DEBUG) {
       return event.respondWith(
