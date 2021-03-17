@@ -18,7 +18,7 @@ addEventListener('fetch', (event) => {
     // newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
     // newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
 
-    event.respondWith(newResponse);
+    event.respondWith(response);
   } catch (e) {
     if (DEBUG) {
       return event.respondWith(
