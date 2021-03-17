@@ -12,8 +12,10 @@ const DEBUG = false
 
 addEventListener('fetch', (event) => {
   try {
-    let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
-    let newResponse = new Response(response.text(), response)
+    let response = await fetch(event.request);
+
+    // let response = await handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
+    let newResponse = new Response(response.body, response)
 
     newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
     newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
