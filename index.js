@@ -12,13 +12,7 @@ const DEBUG = false
 
 addEventListener('fetch', (event) => {
   try {
-    let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
-    let newResponse = new Response(response.body, response)
-
-    // newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
-    // newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
-
-    event.respondWith(response);
+    event.respondWith(addHeaders(event))
   } catch (e) {
     if (DEBUG) {
       return event.respondWith(
@@ -34,3 +28,27 @@ addEventListener('fetch', (event) => {
 addEventListener('scheduled', (event) => {
   event.waitUntil(processCronTrigger(event))
 })
+
+async function addHeaders(event) {
+  let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
+  let newHeaders = new Headers(response.headers)
+
+  if (newHeaders.has("Content-Type") && !newHeaders.get("Content-Type").includes("text/html")) {
+    return new Response(response.body , {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders
+    })
+  }
+
+  console.log(response);
+
+  newHeaders.set("X-Frame-Options", "SAMEORIGIN");
+  newHeaders.set("Content-Security-Policy", "frame-ancestors 'none'");
+
+  return new Response(response.body , {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHeaders
+  })
+}
