@@ -13,7 +13,7 @@ const DEBUG = false
 addEventListener('fetch', (event) => {
   try {
     let response = handleEvent(event, require.context('./pages/', true, /\.js$/), DEBUG);
-    let newResponse = response.clone();
+    let newResponse = new Response(response.body, response)
 
     newResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
     newResponse.headers.set("Content-Security-Policy", "frame-ancestors 'none'");
